@@ -1,0 +1,29 @@
+version: '3'
+services:
+  elasticsearch_node_1:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.1.0"
+    container_name: node_1
+    environment:
+      - node.name=${NODE_NAME}
+      - discovery.seed_hosts=${DISCOVERY_SEED_HOSTS}
+      - cluster.initial_master_nodes=${CLUSTER_INITIAL_MASTER_NODES}
+      - cluster.name=${CLUSTER_NAME}
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ports:
+      - 9200:9200
+      - 9300:9300
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    user: 'elasticsearch'
+    networks:
+      - elasticsearch-network
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+networks:
+  elasticsearch-network:
+volumes:
+  esdata:
+    driver: local
