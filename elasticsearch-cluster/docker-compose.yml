@@ -10,7 +10,7 @@ services:
       - cluster.name=${CLUSTER_NAME}
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-      - network.publish_host=10.142.0.2
+      - network.publish_host=${HOST_ID}
     ports:
       - 9200:9200
       - 9300:9300
